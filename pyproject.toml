@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -9,13 +9,14 @@ description = "A fast TMM optimizer based on jax"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "jax>=0.7.0",
-    "matplotlib>=3.10.5",
-    "numpy>=2.3.2",
-    "scipy>=1.16.1",
+    "jax>=0.4",
+    "matplotlib",
+    "numpy",
+    "scipy",
 ]
 
-[dependency-groups]
-dev = [
-    "ruff>=0.12.7",
-]
+[tool.setuptools]
+packages = ["TMM", "materials"]
+
+[tool.setuptools.package-data]
+materials = ["*.csv"]
