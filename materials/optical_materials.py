@@ -6,7 +6,10 @@ optical_materials.py
 Contains functions that return optical constants for many common optical materials.
 """
 
+from pathlib import Path
 import numpy as np
+
+_MATERIALS_DIR = Path(__file__).resolve().parent
 
 
 def main():
@@ -64,8 +67,12 @@ def sanitize_wavelength(wavelength, unit, min_wavelength, max_wavelength):
 
 def n_from_CSV(wavelength, filename):
     """Imports the refractive index from a csv and returns a complex numpy array. Expects wavelengths in um."""
+    
+    # PREVIOUS VERSION
+    #my_data = np.genfromtxt(filename, delimiter=",", skip_header=1)
 
-    my_data = np.genfromtxt(filename, delimiter=",", skip_header=1)
+    filepath = _MATERIALS_DIR / filename
+    my_data = np.genfromtxt(filepath, delimiter=",", skip_header=1)
 
     wavelength_exp = my_data[:, 0]
     n_real_exp = my_data[:, 1]
@@ -94,7 +101,7 @@ def n_Al(wavelength, *, unit="um"):
         wavelength, unit, min_acceptable_wavelength, max_acceptable_wavelength
     )
 
-    return n_from_CSV(wavelength=wavelength, filename="materials/Al_Rakic.csv")
+    return n_from_CSV(wavelength=wavelength, filename="Al_Rakic.csv")
 
 
 def n_Au(wavelength, *, unit="um"):
@@ -114,7 +121,7 @@ def n_Au(wavelength, *, unit="um"):
         wavelength, unit, min_acceptable_wavelength, max_acceptable_wavelength
     )
 
-    return n_from_CSV(wavelength=wavelength, filename="materials/Au_Johnson.csv")
+    return n_from_CSV(wavelength=wavelength, filename="Au_Johnson.csv")
 
 
 def n_Ge(wavelength, *, unit="um"):
@@ -135,7 +142,7 @@ def n_Ge(wavelength, *, unit="um"):
         wavelength, unit, min_acceptable_wavelength, max_acceptable_wavelength
     )
 
-    return n_from_CSV(wavelength=wavelength, filename="materials/Ge_Amotchkina.csv")
+    return n_from_CSV(wavelength=wavelength, filename="Ge_Amotchkina.csv")
 
 
 def n_InGaAs(wavelength, *, unit="um"):
@@ -157,7 +164,7 @@ def n_InGaAs(wavelength, *, unit="um"):
         wavelength, unit, min_acceptable_wavelength, max_acceptable_wavelength
     )
 
-    return n_from_CSV(wavelength=wavelength, filename="materials/InGaAs_Adachi.csv")
+    return n_from_CSV(wavelength=wavelength, filename="InGaAs_Adachi.csv")
 
 
 def n_InP(wavelength, *, unit="um"):
@@ -179,7 +186,7 @@ def n_InP(wavelength, *, unit="um"):
         wavelength, unit, min_acceptable_wavelength, max_acceptable_wavelength
     )
 
-    return n_from_CSV(wavelength=wavelength, filename="materials/InP_Adachi.csv")
+    return n_from_CSV(wavelength=wavelength, filename="InP_Adachi.csv")
 
 
 def n_PMMA(wavelength, *, unit="um"):
@@ -200,7 +207,7 @@ def n_PMMA(wavelength, *, unit="um"):
         wavelength, unit, min_acceptable_wavelength, max_acceptable_wavelength
     )
 
-    return n_from_CSV(wavelength=wavelength, filename="materials/PMMA_Zhang.csv")
+    return n_from_CSV(wavelength=wavelength, filename="PMMA_Zhang.csv")
 
 
 def n_Si(wavelength, *, unit="um"):
@@ -246,7 +253,7 @@ def n_Si(wavelength, *, unit="um"):
     )
 
     n_out_short = n_from_CSV(
-        wavelength=wavelength_short, filename="materials/Si_Schinke.csv"
+        wavelength=wavelength_short, filename="Si_Schinke.csv"
     )
 
     n_out = np.append(n_out_short, n_out_long)
@@ -307,7 +314,7 @@ def n_TiO2(wavelength, *, unit="um"):
         wavelength, unit, min_acceptable_wavelength, max_acceptable_wavelength
     )
 
-    return n_from_CSV(wavelength=wavelength, filename="materials/TiO2_Sarkar.csv")
+    return n_from_CSV(wavelength=wavelength, filename="TiO2_Sarkar.csv")
 
 
 if __name__ == "__main__":
